@@ -179,3 +179,55 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [definitelytyped]: http://definitelytyped.org/
 
 ##  "password" : "$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC",
+
+##   dragable Scroll
+						<table class="table table-bordered " style="width:54%;float:right;overflow-x:scroll;
+						 display:inline-block;cursor: grab; cursor : -o-grab; cursor : -moz-grab; 
+						 cursor : -webkit-grab;" id="liveInventoryScrollableDiv"
+						  (mousedown)="mouseDown($event)" (mouseup)="mouseUp()" (mouseover)="mousemoveliveInventoryTable($event)">
+							<tr class="thead-light">
+								<th *ngFor="let key of inventoryDays" scope="col"><span>{{key}}</span></th>
+							</tr>
+							<tr *ngFor="let inv of liveInventoryDataForTable">
+								<td style="height: 46px" *ngFor="let item of inventoryDays| keyvalue; index as i" scope="row">
+								
+								<span *ngIf="!inv.daysWoIds[i+1]">0</span>
+								<span *ngIf="inv.daysWoIds[i+1]" style="cursor: pointer;" (click)="showLiveInventoryWorkOrders(inv.daysWoIds[i+1])"><a><U>{{inv.days[i+1]}}</U></a></span>
+								</td>
+							</tr>
+						</table>
+                        
+
+
+##   mouseDown(e) {
+        this.isMouseDown = true;
+        cursorX = e.clientX;
+    }
+
+    mouseUp() {
+        this.isMouseDown = false;
+        cursorX = 0;
+    }
+
+    mousemoveliveInventoryTable( event ) {
+        if ( this.isMouseDown ) {
+            ( function( $ ) {
+                $( document ).ready( function() {
+                    var elDiv = document.getElementById( "liveInventoryScrollableDiv" );
+                     elDiv.scrollLeft -= (-cursorX + (cursorX = event.clientX));
+                } );
+            } )( jQuery );
+        }
+    }
+    
+    mousemoveTransferInventoryTable( event ) {
+        if ( this.isMouseDown ) {
+            ( function( $ ) {
+                $( document ).ready( function() {
+                    var elDiv = document.getElementById( "TransferInventoryScrollableDiv" );
+                     elDiv.scrollLeft -= (-cursorX + (cursorX = event.clientX));
+                } );
+            } )( jQuery );
+        }
+    }
+    
